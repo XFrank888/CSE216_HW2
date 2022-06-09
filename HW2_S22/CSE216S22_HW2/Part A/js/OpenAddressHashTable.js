@@ -56,7 +56,29 @@ export default class OpenAddressHashTable {
 
     // @todo - YOU MUST DEFINE THIS METHOD
     putValue(key, item) {
-
+        let index = hashCode(key); // THIS IS THE NATURAL INDEX
+            let count = 0;
+            while (count < length) {
+                let testKVP = hashTable[index];
+                // IF IT'S AVAILABLE, PUT IT HERE
+                if (testKVP == nullptr) {
+                    hashTable[index] = new KeyValuePair(key, item);
+                    size++;
+                    return;
+                }
+                // IF ANOTHER KVP ALREADY USES THIS KEY, REPLACE IT
+                else if (testKVP.key.compare(key) == 0) {
+                    hashTable[index].value = item;
+                    size++;
+                    return;
+                }
+                index++;
+                // WE MAY NEED TO RESET index TO LOOK IN THE FRONT OF THE HASH TABLE
+                if (index == length)
+                    index = 0;
+                count++;
+            }
+            
     }
     
     toString() {
