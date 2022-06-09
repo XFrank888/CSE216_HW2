@@ -37,8 +37,10 @@ console.log("-------------------------------------------------------------------
 // DEMONSTRATE MAKING KEYS AND ADDING VALUES TO THE HASH TABLE    
 let jlKey = hashTable.generateKey();
 hashTable.putValue(jlKey, new Student(jlKey, "John", "Lennon", 3.8));
+printHashTable("\nAfter chaning 1 Items:", hashTable);
 let cwKey = hashTable.generateKey();
 hashTable.putValue(cwKey, new Student(cwKey, "Charlie", "Watts", 3.1));
+printHashTable("\nAfter chaning 2 Items:", hashTable);
 let dgKey = hashTable.generateKey();
 hashTable.putValue(dgKey, new Employee(dgKey, "David", "Gilmour", 120000));
 printHashTable("\nAfter Changing 3 Items", hashTable);
@@ -53,7 +55,9 @@ console.log("\nget " + dgKey + ": " + p.toString() + "\n");
 
 // NOW LET'S TRY REPLACING THE DATA IN THE ABOVE THREE
 hashTable.putValue(jlKey, new Student(jlKey, "Otis", "Redding", 3.5));
+printHashTable("\nAfter Changing 1 Items", hashTable);
 hashTable.putValue(cwKey, new Student(cwKey, "Keith", "Richards", 3.1));
+printHashTable("\nAfter Changing 2 Items", hashTable);
 hashTable.putValue(dgKey, new Student(dgKey, "Bill", "Withers", 3.4));
 printHashTable("\nAfter Changing 3 Items", hashTable);
 

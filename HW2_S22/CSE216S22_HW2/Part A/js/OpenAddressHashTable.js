@@ -50,7 +50,7 @@ export default class OpenAddressHashTable {
         let index = this.hashCode(key); // THIS IS THE NATURAL INDEX
         let count = 0;
         while (count < this.length) {
-            let testKVP = hashTable[index];
+            let testKVP = this.hashTable[index];
             // IF IT'S nullptr, IT CAN'T BE IN THE HASH TABLE
             if (testKVP == null) {
                 return null;
