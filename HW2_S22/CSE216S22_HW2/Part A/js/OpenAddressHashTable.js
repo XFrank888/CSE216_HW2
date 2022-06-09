@@ -47,6 +47,7 @@ export default class OpenAddressHashTable {
     
     // @todo - YOU MUST DEFINE THIS METHOD
     getValue(key) {
+        
         return null;
     }
     
@@ -56,29 +57,70 @@ export default class OpenAddressHashTable {
 
     // @todo - YOU MUST DEFINE THIS METHOD
     putValue(key, item) {
-        let index = hashCode(key); // THIS IS THE NATURAL INDEX
-            let count = 0;
-            while (count < length) {
-                let testKVP = hashTable[index];
-                // IF IT'S AVAILABLE, PUT IT HERE
-                if (testKVP == nullptr) {
-                    hashTable[index] = new KeyValuePair(key, item);
-                    size++;
-                    return;
-                }
-                // IF ANOTHER KVP ALREADY USES THIS KEY, REPLACE IT
-                else if (testKVP.key.compare(key) == 0) {
-                    hashTable[index].value = item;
-                    size++;
-                    return;
-                }
-                index++;
-                // WE MAY NEED TO RESET index TO LOOK IN THE FRONT OF THE HASH TABLE
-                if (index == length)
-                    index = 0;
-                count++;
+        let index = this.hashCode(key); // THIS IS THE NATURAL INDEX
+        let count = 0;
+        //console.log("The index:");
+        //console.log(index);
+        console.log("The size: ");
+        console.log(this.size);
+        //console.log("The length: ");
+        //console.log(this.length);
+        
+        while (count < this.length) {
+            let testKVP = this.hashTable[index];
+            // IF IT'S AVAILABLE, PUT IT HERE
+            if (testKVP == null) {
+                this.hashTable[index] = new KeyValuePair(key, item);
+                this.size++;
+                return;
             }
-            
+            // IF ANOTHER KVP ALREADY USES THIS KEY, REPLACE IT
+            else if (testKVP.key == key) {
+                this.hashTable[index].value = item;
+                this.size++;
+                return;
+            }
+            index++;
+            // WE MAY NEED TO RESET index TO LOOK IN THE FRONT OF THE HASH TABLE
+            if (index == this.length)
+                index = 0;
+            count++;
+        }
+        
+        // WE DIDN'T FIND AN EMPTY SPOT OR AN ITEM WITH THE SAME
+        // KEY SO WE NEED A BIGGER HASH TABLE. SO MAKE A BIGGER
+        // ONE AND PUT ALL THE OLD VALUES IN THE NEW ONE
+        let temp = this.hashTable;
+        this.length = this.length*2;
+        console.log("New length: ");
+        console.log(this.length);   
+        let z = 0;
+        console.log("z is : " + z);
+        z++;
+        this.hashTable = [];
+        //console.log("The length of the hashtable: ");
+        
+        // FIRST CLEAR IT OUT
+        for (let i = 0; i < this.length; i++) {
+            //console(this.length);
+            this.hashTable[i] = null;
+        }
+        
+        // THEN MOVE ALL THE OLD VALUES OVER
+        let numToCopy = this.size;
+        this.size = 0;
+        for (let i = 0; i < numToCopy; i++) {
+            let kvp = temp[i];
+            let keyToMove = kvp.key;
+            let valueToMove = kvp.value;
+            this.putValue(keyToMove, valueToMove);
+            kvp = null;
+        }
+        temp = null;
+        
+        // AND REMEMBER TO ADD THE NEW ONE
+        this.putValue(key, item);
+
     }
     
     toString() {

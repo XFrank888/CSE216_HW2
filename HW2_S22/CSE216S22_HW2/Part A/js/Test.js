@@ -27,9 +27,13 @@ addPersonToHashTable(new Employee(hashTable.generateKey(), "Paul", "McCartney", 
 addPersonToHashTable(new Employee(hashTable.generateKey(), "Ringo", "Starr", 40000), hashTable);
 addPersonToHashTable(new Person(hashTable.generateKey(), "Chuck", "Berry"), hashTable);
 addPersonToHashTable(new Student(hashTable.generateKey(), "Mick", "Jagger", 3.5), hashTable);
+console.log("-----------------------------------------------------------------------------");
 addPersonToHashTable(new Student(hashTable.generateKey(), "Jimi", "Hendrix", 3.6), hashTable);
 addPersonToHashTable(new Person(hashTable.generateKey(), "Roger", "Waters"), hashTable);
 
+//printHashTable("Current Hash Table:", hashTable);
+
+console.log("-------------------------------------------------------------------------------");
 // DEMONSTRATE MAKING KEYS AND ADDING VALUES TO THE HASH TABLE    
 let jlKey = hashTable.generateKey();
 hashTable.putValue(jlKey, new Student(jlKey, "John", "Lennon", 3.8));
