@@ -71,6 +71,60 @@ export default class OpenAddressHashTable {
     
     // @todo - YOU MUST DEFINE THIS METHOD
     removeValue(key) {   
+        let index = this.hashCode(key); // THIS IS THE NATURAL INDEX
+        let count = 0;
+        while (count < this.length) {
+            let testKVP = this.hashTable[index];
+            // IF IT'S nullptr, IT CAN'T BE IN THE HASH TABLE
+            if (testKVP == null) {
+                return;
+            }
+            // IF A KVP USES THIS KEY, REMOVE IT
+            else if (testKVP.key == key) {
+                // DELETE THE KVP (but not the value)
+                testKVP = null;
+                
+                // EMPTY THAT LOCATION
+                this.hashTable[index] = null;
+                
+                // DECREMENT THE SIZE
+                this.size--;
+                
+                // AND REHASH THE TABLE
+                let temp = [];
+                let counter = 0;
+                // FIRST GET ALL THE EXISTING VALUES AND PUT THEM
+                // WHERE WE CAN GET THEM WHILE EMPTYING THE HASH TABLE
+                for (let i = 0; i < this.length; i++) {
+                    let item = this.hashTable[i];
+                    if (item != null) {
+                        temp[counter] = item;
+                        counter++;
+                    }
+                    this.hashTable[i] = null;
+                }
+                // RESET THE size
+                let size = 0;
+                // AND NOW RE-PUT ALL THE VALUES
+                for (let i = 0; i < counter; i++) {
+                    let item = temp[i];
+                    let keyToRehash = item.key;
+                    let valueToRehash = item.value;
+                    this.putValue(keyToRehash, valueToRehash);
+                    
+                    // DELETE THE OLD KeyValuePair OBJECT SINCE putValue ADDS A NEW ONE
+                    item = null;
+                }
+                // AND REMEMBER TO DELETE OUR TEMP ARRAY
+                temp = null;
+                return;
+            }
+            index++;
+            // WE MAY NEED TO RESET index TO LOOK IN THE FRONT OF THE HASH TABLE
+            if (index == this.length)
+                index = 0;
+            count++;
+        }            
     }
 
     // @todo - YOU MUST DEFINE THIS METHOD
