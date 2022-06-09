@@ -47,7 +47,25 @@ export default class OpenAddressHashTable {
     
     // @todo - YOU MUST DEFINE THIS METHOD
     getValue(key) {
-        
+        let index = this.hashCode(key); // THIS IS THE NATURAL INDEX
+        let count = 0;
+        while (count < this.length) {
+            let testKVP = hashTable[index];
+            // IF IT'S nullptr, IT CAN'T BE IN THE HASH TABLE
+            if (testKVP == null) {
+                return null;
+            }
+            // IF A KVP USES THIS KEY, RETURN ITS VALUE
+            else if (testKVP.key == key) {
+                return testKVP.value;
+            }
+            index++;
+            // WE MAY NEED TO RESET index TO LOOK IN THE FRONT OF THE HASH TABLE
+            if (index == this.length)
+                index = 0;
+            count++;
+        }
+        // IT WAS NOT IN THE FULL HASH TABLE, SO RETURN nullptr
         return null;
     }
     
