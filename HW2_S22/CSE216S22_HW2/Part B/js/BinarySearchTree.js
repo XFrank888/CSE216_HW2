@@ -110,7 +110,99 @@ export default class BinarySearchTree {
 
     // @todo - YOU MUST DEFINE THIS METHOD
     removeValue(key) {
-
+        let traveller = this.root;
+        let found = false;
+        while (!found) {
+            console.log("key: " + key + ", traveller->key: " + traveller.key + "\n");
+            if (key == traveller.key) {
+                // GET THE LARGEST ON THE LEFT, IS THERE IS A LEFT
+                if (traveller.left != null) {
+                    // FIND THE LARGEST
+                    let largest = traveller.left;
+                    while (largest.right != null) {
+                        largest = largest.right;
+                    }
+                    // AT THIS POINT largest MUST
+                    // BE THE LARGEST ON THE LEFT
+                    // BUT IT MIGHT BE ITS PARENT LEFT
+                    // OR RIGHT NODE
+                    
+                    // FIRST MOVE THE key AND THE data
+                    traveller.key = largest.key;
+                    traveller.data = largest.data;
+                    
+                    // THEN FIX THE TREE
+                    if (largest == largest.parent.left) {
+                        largest.parent.left = null;
+                    }
+                    else {
+                        largest.parent.right = null;
+                    }
+                    largest = null;
+                }
+                // OR THE SMALLEST ON THE RIGHT
+                else if (traveller.right != null) {
+                    // FIND THE SMALLEST
+                    let smallest = traveller.right;
+                    while (smallest.left != null) {
+                        smallest = smallest.left;
+                    }
+                    // AT THIS POINT Smallest MUST
+                    // BE THE SMALLEST ON THE RIGHT
+                    // BUT IT MIGHT BE ITS PARENT RIGHT
+                    // OR LEFT NODE
+                    
+                    // FIRST MOVE THE key AND THE data
+                    traveller.key = smallest.key;
+                    traveller.data = smallest.data;
+                    
+                    // THEN FIX THE TREE
+                    if (smallest == smallest.parent.right) {
+                        smallest.parent.right = null;
+                    }
+                    else {
+                        smallest.parent.left = null;
+                    }
+                    smallest = null;
+                }
+                // IT'S A LEAF
+                else {
+                    // IT MIGHT BE THE ROOT (i.e. THE ONLY NODE)
+                    if (traveller == this.root) {
+                        //delete root;
+                        root = null;
+                    }
+                    // IT MIGHT BE ON ITS PARENT'S LEFT
+                    else if (traveller == traveller.parent.left) {
+                        traveller.parent.left = null;
+                        traveller = null;
+                    }
+                    // OR ITS RIGHT
+                    else {
+                        traveller.parent.right = null;
+                        traveller = null;
+                    }
+                }
+                this.size--;
+                found = true;
+            }
+            else if (key < traveller.key) {
+                if (traveller.left == null) {
+                    return;
+                }
+                else {
+                    traveller = traveller.left;
+                }
+            }
+            else {
+                if (traveller.right == null) {
+                    return;
+                }
+                else {
+                    traveller = traveller.right;
+                }
+            }
+        }
     }
 
     toStringRecursively(traveller, level) {
