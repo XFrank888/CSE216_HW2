@@ -139,7 +139,7 @@ export default class BinarySearchTree {
                         largest.parent.left = largest.left;
                     }
                     else {
-                        largest.parent.right = largest->left;
+                        largest.parent.right = largest.left;
                     }
                     largest = null;
 
