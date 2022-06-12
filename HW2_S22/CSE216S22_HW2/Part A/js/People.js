@@ -33,14 +33,15 @@ class Student extends Person {
 }
 
 class Undergraduates extends Student {
-    constructor(initKey, initFirstName, initLastName, initGP, initStanding) {
-        super(initKey, initFirstName, initLastName, initGP);
+    constructor(initKey, initFirstName, initLastName, initGPA, initStanding) {
+        super(initKey, initFirstName, initLastName, initGPA);
         this.standing = initStanding;
     }
 
     toString() {
-        return super.toString() + " (" + this.standing.toFixed(1) + " standing)";
+        return super.toString() + " (" + "Standing " + this.standing;
     }
+
 }
 
 export {Person, Employee, Student, Undergraduates};
