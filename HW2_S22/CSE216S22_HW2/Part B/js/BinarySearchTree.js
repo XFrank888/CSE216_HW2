@@ -110,10 +110,12 @@ export default class BinarySearchTree {
 
     // @todo - YOU MUST DEFINE THIS METHOD
     removeValue(key) {
+
         let traveller = this.root;
         let found = false;
         while (!found) {
             console.log("key: " + key + ", traveller->key: " + traveller.key + "\n");
+            
             if (key == traveller.key) {
                 // GET THE LARGEST ON THE LEFT, IS THERE IS A LEFT
                 if (traveller.left != null) {
@@ -130,15 +132,17 @@ export default class BinarySearchTree {
                     // FIRST MOVE THE key AND THE data
                     traveller.key = largest.key;
                     traveller.data = largest.data;
-                    
-                    // THEN FIX THE TREE
+                    // THEN FIX THE TREE, NOTE largest HAS NO RIGHT
+                    // IF IT'S A LEAF WE DON'T CARE ABOUT ITS CHILDREN
+                    // SO WE CAN JUST KEEP ITS LEFT
                     if (largest == largest.parent.left) {
-                        largest.parent.left = null;
+                        largest.parent.left = largest.left;
                     }
                     else {
-                        largest.parent.right = null;
+                        largest.parent.right = largest->left;
                     }
                     largest = null;
+
                 }
                 // OR THE SMALLEST ON THE RIGHT
                 else if (traveller.right != null) {
@@ -147,6 +151,7 @@ export default class BinarySearchTree {
                     while (smallest.left != null) {
                         smallest = smallest.left;
                     }
+
                     // AT THIS POINT Smallest MUST
                     // BE THE SMALLEST ON THE RIGHT
                     // BUT IT MIGHT BE ITS PARENT RIGHT
@@ -156,12 +161,13 @@ export default class BinarySearchTree {
                     traveller.key = smallest.key;
                     traveller.data = smallest.data;
                     
+                    
                     // THEN FIX THE TREE
                     if (smallest == smallest.parent.right) {
-                        smallest.parent.right = null;
+                        smallest.parent.right = smallest.right;
                     }
                     else {
-                        smallest.parent.left = null;
+                        smallest.parent.left = smallest.right;
                     }
                     smallest = null;
                 }
