@@ -39,7 +39,7 @@ class Undergraduates extends Student {
     }
 
     toString() {
-        return super.toString() + " (" + "Standing " + this.standing;
+        return super.toString() + " (" + "Standing " + this.standing + ")";
     }
 
 }
